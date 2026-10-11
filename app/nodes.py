@@ -58,3 +58,31 @@ def assess(state):
 </alert_data>'''
     v = get_verdict(SYSTEM, payload, Verdict)
     return {'verdict': v.model_dump(), 'audit': [f'assess: {v.classification} ({v.confidence:.2f})']}
+
+# app/nodes.py (continued)
+from app.config import KNOWN_FP_RULES, BAD_REPUTATIONS
+
+def check_known_fp(state):
+    n, e = state['normalized'], state['enrichment']
+    hit = n['rule'] in KNOWN_FP_RULES and e['ip']['reputation'] not in BAD_REPUTATIONS
+    out = {'known_fp': hit, 'audit': [f'check_known_fp: {hit}']}
+    if hit:
+        out['verdict'] = {'classification': 'benign', 'confidence': 0.95,
+                          'rationale': 'Matches a known false-positive rule.', 'evidence': ['rule']}
+    return out
+
+# app/nodes.py (continued)
+from app.config import CONFIDENCE_TO_CLOSE, HIGH_RISK_ASSET_LEVELS, BAD_REPUTATIONS
+
+def decide(state):
+    v, e = state['verdict'], state['enrichment']
+    risky = (e['asset'].get('criticality') in HIGH_RISK_ASSET_LEVELS
+             and e['ip'].get('reputation') in BAD_REPUTATIONS)
+    benign = v['classification'] == 'benign' and v['confidence'] >= CONFIDENCE_TO_CLOSE
+    d = 'close_benign' if benign and not risky else 'escalate_tier2'
+    return {'decision': d, 'audit': [f'decide: {d}']}
+
+def record(state):
+    v, d = state['verdict'], state['decision']
+    cls, conf, why = v['classification'], v['confidence'], v['rationale']
+    return {'case_note': f'{d} | {cls} ({conf:.2f}) | {why}', 'audit': ['record: wrote case note']}
