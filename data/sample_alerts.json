@@ -1,0 +1,26 @@
+[
+  {
+    "rule_name": "Scheduled vulnerability scan",
+    "severity": "low",
+    "user": "svc-scanner",
+    "host": "dev-ws-221",
+    "src_ip": "198.51.100.7",
+    "description": "Weekly authenticated vulnerability scan from the internal scanner."
+  },
+  {
+    "rule_name": "Suspicious login success after failures",
+    "severity": "high",
+    "user": "jdoe",
+    "host": "fin-ws-014",
+    "src_ip": "203.0.113.50",
+    "description": "Login success after 14 failed attempts."
+  },
+  {
+    "rule_name": "Login success from new country",
+    "severity": "medium",
+    "user": "asmith",
+    "host": "dev-ws-221",
+    "src_ip": "192.0.2.44",
+    "description": "First successful login for this user from a country not seen in the last 90 days."
+  }
+]
