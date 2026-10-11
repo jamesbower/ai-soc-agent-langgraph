@@ -16,7 +16,7 @@ def cache(tmp_path, monkeypatch):
 def test_replay_reads_recorded_verdict(cache, monkeypatch):
     cache.write_text(json.dumps({llm._key('sys', 'pay'): V}))
     monkeypatch.setenv('SOC_AGENT_MODE', 'replay')
-    assert llm.get_verdict('sys', 'pay', Verdict).classification == 'malicious'
+    assert llm.get_verdict('sys', 'pay', Verdict) == Verdict(**V)
 
 
 def test_replay_unrecorded_raises_keyerror(cache, monkeypatch):
@@ -33,6 +33,7 @@ def test_live_calls_model_and_records(cache, monkeypatch):
             calls['kwargs'] = kwargs
 
         def with_structured_output(self, schema):
+            calls['schema'] = schema
             return self
 
         def invoke(self, messages):
@@ -42,10 +43,12 @@ def test_live_calls_model_and_records(cache, monkeypatch):
     monkeypatch.setattr(llm, 'ChatOpenAI', FakeChat)
     monkeypatch.setenv('SOC_AGENT_MODE', 'live')
     monkeypatch.setenv('OPENAI_MODEL', 'test-model')
+    cache.write_text(json.dumps({'other': V}))
     assert llm.get_verdict('sys', 'pay', Verdict).confidence == 0.9
+    assert calls['schema'] is Verdict
     assert calls['kwargs']['model'] == 'test-model'
     assert calls['messages'] == [('system', 'sys'), ('human', 'pay')]
-    assert json.loads(cache.read_text()) == {llm._key('sys', 'pay'): V}
+    assert json.loads(cache.read_text()) == {'other': V, llm._key('sys', 'pay'): V}
 
 
 def test_key_changes_with_prompt():
