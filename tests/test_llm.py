@@ -47,6 +47,7 @@ def test_live_calls_model_and_records(cache, monkeypatch):
     assert llm.get_verdict('sys', 'pay', Verdict).confidence == 0.9
     assert calls['schema'] is Verdict
     assert calls['kwargs']['model'] == 'test-model'
+    assert calls['kwargs']['reasoning_effort'] == 'low'
     assert calls['messages'] == [('system', 'sys'), ('human', 'pay')]
     assert json.loads(cache.read_text()) == {'other': V, llm._key('sys', 'pay'): V}
 

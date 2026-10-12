@@ -15,7 +15,7 @@ def get_verdict(system: str, payload: str, schema):
     key = _key(system, payload)
     if os.getenv('SOC_AGENT_MODE', 'live') == 'replay':
         return schema(**cache[key])
-    llm = ChatOpenAI(model=os.environ['OPENAI_MODEL'], temperature=0).with_structured_output(schema)
+    llm = ChatOpenAI(model=os.environ['OPENAI_MODEL'], reasoning_effort='low').with_structured_output(schema)
     verdict = llm.invoke([('system', system), ('human', payload)])
     cache[key] = verdict.model_dump()
     CACHE.write_text(json.dumps(cache, indent=2))

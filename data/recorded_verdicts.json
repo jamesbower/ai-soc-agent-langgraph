@@ -1,0 +1,325 @@
+{
+  "d0d86b9a5c0b8139": {
+    "classification": "malicious",
+    "confidence": 0.97,
+    "rationale": "A successful login followed 14 failed attempts, and the source IP is identified as malicious and tagged for credential stuffing. The account accessed a high-criticality finance workstation with payment-system access, increasing the potential impact.",
+    "evidence": [
+      "alert.rule: Suspicious login success after failures",
+      "alert.description: Login success after 14 failed attempts.",
+      "alert.src_ip: 203.0.113.50",
+      "context.ip.reputation: malicious",
+      "context.ip.tags: credential-stuffing",
+      "context.asset.criticality: high",
+      "context.asset.owner: finance",
+      "context.asset.note: Finance workstation with access to payment systems."
+    ]
+  },
+  "3038c34845a30588": {
+    "classification": "suspicious",
+    "confidence": 0.65,
+    "rationale": "A successful login from a country not seen for this user in the last 90 days is an anomaly that warrants review. The IP has no reputation data, and the alert does not provide the country, authentication method, or other corroborating details, so compromise cannot be established. The workstation is low criticality and has no production access.",
+    "evidence": [
+      "alert.rule: Login success from new country",
+      "alert.description: First successful login for this user from a country not seen in the last 90 days.",
+      "context.ip.reputation: unknown; context.ip.note: No intel on this IP.",
+      "context.asset.criticality: low; context.asset.note: Developer workstation with no production access."
+    ]
+  },
+  "5450ef3cfef418ff": {
+    "classification": "suspicious",
+    "confidence": 0.88,
+    "rationale": "The alert describes scheduled vulnerability scanning, which may be legitimate, but the source IP has a malicious reputation and is tagged for credential stuffing. The data does not identify the scanner as authorized or show whether any login succeeded, so malicious activity is not confirmed. The target is a high-criticality finance workstation.",
+    "evidence": [
+      "alert.rule: Scheduled vulnerability scan",
+      "alert.user: svc-scanner",
+      "alert.src_ip: 203.0.113.50",
+      "context.ip.reputation: malicious",
+      "context.ip.tags: credential-stuffing",
+      "context.ip.note: Treat any successful login from this IP as suspect.",
+      "context.asset.criticality: high",
+      "context.asset.note: Finance workstation with access to payment systems."
+    ]
+  },
+  "bb29ee52bd4f1526": {
+    "classification": "suspicious",
+    "confidence": 0.76,
+    "rationale": "The traffic is labeled as a scheduled vulnerability scan and uses the svc-scanner account, which could indicate authorized activity. However, the source IP has a malicious reputation and a credential-stuffing tag. No successful login or other evidence of compromise is provided, so the activity is suspicious but not established as malicious.",
+    "evidence": [
+      "alert.rule: Scheduled vulnerability scan",
+      "alert.user: svc-scanner",
+      "alert.src_ip: 203.0.113.50",
+      "context.ip.reputation: malicious",
+      "context.ip.tags: credential-stuffing",
+      "context.asset.criticality: low"
+    ]
+  },
+  "c11f946c91f09916": {
+    "classification": "malicious",
+    "confidence": 0.98,
+    "rationale": "A successful login followed 14 failed attempts, and the source IP is labeled malicious and associated with credential stuffing. The targeted host is a high-criticality finance workstation with access to payment systems, increasing the potential impact.",
+    "evidence": [
+      "alert.rule: Suspicious login success after failures",
+      "alert.description: Login success after 14 failed attempts.",
+      "alert.src_ip: 203.0.113.50",
+      "context.ip.reputation: malicious",
+      "context.ip.tags: credential-stuffing",
+      "context.asset.criticality: high",
+      "context.asset.note: Finance workstation with access to payment systems."
+    ]
+  },
+  "bfbdb9ffff0552d4": {
+    "classification": "suspicious",
+    "confidence": 0.88,
+    "rationale": "The login pattern is consistent with account compromise: logins were recorded from two countries only 40 minutes apart, and the source IP is tagged as malicious and associated with credential-stuffing. A successful login from this IP is specifically noted as suspect. The affected finance workstation has high criticality, increasing potential impact. The alert does not provide login success details or the other login's source and location, so the evidence does not conclusively establish compromise.",
+    "evidence": [
+      "alert.rule: Impossible travel login",
+      "alert.severity: high",
+      "alert.description: Logins from two countries 40 minutes apart.",
+      "alert.user: mlee; alert.host: fin-ws-014; alert.src_ip: 203.0.113.50",
+      "context.ip.reputation: malicious; context.ip.tags: credential-stuffing",
+      "context.ip.note: Seen in credential-stuffing feeds. Treat any successful login from this IP as suspect.",
+      "context.asset.criticality: high; context.asset.owner: finance",
+      "context.asset.note: Finance workstation with access to payment systems."
+    ]
+  },
+  "892278145714f192": {
+    "classification": "malicious",
+    "confidence": 0.95,
+    "rationale": "The alert reports 23 MFA push requests in 10 minutes, with the last request approved. The source IP is tagged malicious for credential stuffing, and the affected host is a high-criticality finance workstation. Together, these indicate likely MFA push fatigue resulting in unauthorized access.",
+    "evidence": [
+      "alert.rule: MFA push fatigue",
+      "alert.severity: high",
+      "alert.description: 23 MFA push requests in 10 minutes, the last one approved.",
+      "alert.user: jdoe; alert.host: fin-ws-014; alert.src_ip: 203.0.113.50",
+      "context.ip.reputation: malicious; context.ip.tags: credential-stuffing",
+      "context.asset.criticality: high; context.asset.note: Finance workstation with access to payment systems."
+    ]
+  },
+  "e9ecde6270c5dafd": {
+    "classification": "malicious",
+    "confidence": 0.95,
+    "rationale": "A successful login followed nine failures from an IP identified as malicious and tagged for credential stuffing. This is strong evidence of a potentially compromised account. The affected asset has low criticality, which limits potential impact but does not make the login benign.",
+    "evidence": [
+      "alert.rule: Suspicious login success after failures",
+      "alert.description: Login success after 9 failed attempts",
+      "alert.src_ip: 203.0.113.50",
+      "context.ip.reputation: malicious",
+      "context.ip.tags: credential-stuffing",
+      "context.asset.criticality: low"
+    ]
+  },
+  "803064b12ace8521": {
+    "classification": "suspicious",
+    "confidence": 0.84,
+    "rationale": "Repeated outbound HTTPS connections to an IP marked malicious and associated with credential-stuffing activity warrant investigation. The alert does not establish that a login succeeded or that the workstation was compromised, so malicious is not confirmed. Asset criticality is low.",
+    "evidence": [
+      "alert.rule: Outbound connection to flagged IP",
+      "alert.description: Workstation made 40 HTTPS connections to 203.0.113.50 overnight.",
+      "context.ip.reputation: malicious",
+      "context.ip.tags: credential-stuffing",
+      "context.ip.note: Treat any successful login from this IP as suspect; no successful login is reported.",
+      "context.asset.criticality: low",
+      "context.asset.note: Developer workstation with no production access."
+    ]
+  },
+  "ae23c097e5142d30": {
+    "classification": "suspicious",
+    "confidence": 0.62,
+    "rationale": "A successful login from a country not previously seen for this user warrants review. The IP has no reputation data, and the alert provides no country, authentication method, or corroborating activity, so maliciousness cannot be established. The affected workstation has low criticality.",
+    "evidence": [
+      "alert.rule: Login success from new country",
+      "alert.description: First successful login for this user from a new country.",
+      "alert.severity: medium",
+      "context.ip.reputation: unknown; note: No intel on this IP.",
+      "context.asset.criticality: low; note: Developer workstation with no production access."
+    ]
+  },
+  "a71df5994b8bafa8": {
+    "classification": "suspicious",
+    "confidence": 0.92,
+    "rationale": "A successful login for jdoe followed 20 failed attempts, which is consistent with possible credential guessing or account compromise. The affected finance workstation has high criticality and access to payment systems. The source IP reputation is unknown, so there is not enough evidence to classify the activity as malicious.",
+    "evidence": [
+      "alert.rule: Suspicious login success after failures",
+      "alert.description: Login success after 20 failed attempts",
+      "alert.user: jdoe",
+      "alert.host: fin-ws-014",
+      "alert.src_ip: 192.0.2.23",
+      "context.ip.reputation: unknown; context.ip.note: No intel on this IP.",
+      "context.asset.criticality: high; context.asset.owner: finance; context.asset.note: Finance workstation with access to payment systems."
+    ]
+  },
+  "dd9309f7777552b9": {
+    "classification": "suspicious",
+    "confidence": 0.96,
+    "rationale": "The alert describes a password-spray pattern: one source IP tried the same password against 300 accounts within 15 minutes. This is strongly indicative of credential-guessing activity, though the data does not confirm whether any attempts succeeded or identify the source. IP reputation and asset criticality are unknown, so the verdict is suspicious rather than confirmed malicious.",
+    "evidence": [
+      "alert.rule: Password spray detected",
+      "alert.description: One IP tried one password against 300 accounts in 15 minutes.",
+      "alert.src_ip: 192.0.2.150",
+      "context.ip.reputation: unknown",
+      "context.asset.criticality: unknown"
+    ]
+  },
+  "d40d5276b6a0c03c": {
+    "classification": "suspicious",
+    "confidence": 0.78,
+    "rationale": "An interactive root login to a production database host at 03:12 local time is unusual and warrants investigation. The IP reputation and asset ownership are unknown, so the available evidence does not establish whether the login was authorized or malicious.",
+    "evidence": [
+      "alert.rule: Admin login outside business hours",
+      "alert.user: root",
+      "alert.host: db-prod-03",
+      "alert.description: Interactive root login at 03:12 local time",
+      "context.ip.reputation: unknown",
+      "context.asset.criticality: unknown",
+      "context.asset.owner: unknown"
+    ]
+  },
+  "1f174fd7b4d5f38c": {
+    "classification": "suspicious",
+    "confidence": 0.78,
+    "rationale": "An interactive login from an internal vulnerability scanner to a VM that is not in inventory is unusual and warrants review. The scanner IP's clean reputation and internal-scanner note are reassuring, but the user\u2019s authorization and the VM\u2019s purpose are unknown.",
+    "evidence": [
+      "alert.rule: User login; severity: low",
+      "alert.description: Interactive user login from the vulnerability scanner IP to a VM not in inventory.",
+      "alert.user: kchan; alert.host: lab-vm-07; alert.src_ip: 198.51.100.7",
+      "context.ip.note: Internal vulnerability scanner; reputation: clean",
+      "context.asset.note: Asset not in inventory; criticality and owner: unknown"
+    ]
+  },
+  "e950e464203bebaa": {
+    "classification": "benign",
+    "confidence": 0.92,
+    "rationale": "The password change is described as a self-service action by the user after a 90-day expiry reminder. No evidence in the provided data indicates unauthorized activity. Confidence is slightly limited because the source IP has no reputation information.",
+    "evidence": [
+      "alert.rule: Password changed",
+      "alert.description: User changed their own password through the self-service portal after the 90-day expiry reminder.",
+      "alert.severity: low",
+      "context.ip.reputation: unknown; note: No intel on this IP.",
+      "context.asset.criticality: low; note: Developer workstation with no production access."
+    ]
+  },
+  "715fc770e2b399ef": {
+    "classification": "benign",
+    "confidence": 0.85,
+    "rationale": "The download is described as a developer retrieving a build artifact from the internal package repository, consistent with engineering activity. The workstation has low criticality and no production access. No evidence in the alert indicates malicious activity, though the IP reputation is unknown.",
+    "evidence": [
+      "alert.rule: Large file download",
+      "alert.description: Developer downloaded a 2 GB build artifact from the internal package repository.",
+      "context.asset.criticality: low",
+      "context.asset.owner: engineering",
+      "context.asset.note: Developer workstation with no production access.",
+      "context.ip.reputation: unknown"
+    ]
+  },
+  "2247f6f41dfc82eb": {
+    "classification": "suspicious",
+    "confidence": 0.63,
+    "rationale": "A failed login followed by a successful login from the same source within 20 seconds could reflect a mistyped password, but the alert does not establish whether the success was authorized. The source IP has unknown reputation, so intent cannot be confirmed. The asset has low criticality and no production access, which limits potential impact.",
+    "evidence": [
+      "alert.rule: Failed login",
+      "alert.description: One failed login followed by a success 20 seconds later from the same IP",
+      "alert.src_ip: 192.0.2.202",
+      "context.ip.reputation: unknown; note: No intel on this IP",
+      "context.asset.criticality: low; note: Developer workstation with no production access"
+    ]
+  },
+  "9078a33fdefc8373": {
+    "classification": "suspicious",
+    "confidence": 0.91,
+    "rationale": "A successful login following 12 failures may indicate a brute-force or password-guessing attempt, and the affected workstation is high criticality with access to payment systems. The source IP and its reputation are unknown, so the evidence is insufficient to classify the activity as malicious.",
+    "evidence": [
+      "alert.rule: Suspicious login success after failures",
+      "alert.description: Login success after 12 failed attempts",
+      "alert.user: jdoe",
+      "alert.host: fin-ws-014",
+      "alert.src_ip: null",
+      "context.ip.reputation: unknown",
+      "context.asset.criticality: high",
+      "context.asset.note: Finance workstation with access to payment systems"
+    ]
+  },
+  "cf683c1830ab4fbb": {
+    "classification": "malicious",
+    "confidence": 0.91,
+    "rationale": "A successful login followed 14 failed attempts, and the source IP is identified as malicious and tagged for credential stuffing. The user and host are unknown, so the affected account and asset cannot be assessed.",
+    "evidence": [
+      "alert.rule: Suspicious login success after failures",
+      "alert.description: Login success after 14 failed attempts.",
+      "alert.src_ip: 203.0.113.50",
+      "context.ip.reputation: malicious",
+      "context.ip.tags: credential-stuffing",
+      "context.asset.criticality: unknown",
+      "context.asset.owner: unknown"
+    ]
+  },
+  "c63f387b00ac0c24": {
+    "classification": "suspicious",
+    "confidence": 0.22,
+    "rationale": "The alert lacks a rule and description, so the activity cannot be characterized. The source IP has unknown reputation, which is not evidence of maliciousness. Because the affected host is a high-criticality finance workstation with access to payment systems, the alert warrants review; the available evidence is insufficient to classify it as benign or malicious.",
+    "evidence": [
+      "alert.severity: medium",
+      "alert.rule: null",
+      "alert.description: empty",
+      "context.ip.reputation: unknown; note: No intel on this IP.",
+      "context.asset.criticality: high; owner: finance; note: Finance workstation with access to payment systems.",
+      "alert.user: jdoe; host: fin-ws-014; src_ip: 192.0.2.30"
+    ]
+  },
+  "8f4b2261358de52c": {
+    "classification": "suspicious",
+    "confidence": 0.18,
+    "rationale": "The alert reports unusual activity on a server, but provides no actionable details to determine whether it is benign or malicious. Key identifiers and context are missing, so confidence is low.",
+    "evidence": [
+      "alert.description: \"Something unusual happened on a server.\"",
+      "alert.severity: medium",
+      "alert.rule, alert.user, alert.host, and alert.src_ip: null",
+      "context.ip.reputation: unknown; context.ip.note: \"No intel on this IP.\"",
+      "context.asset.criticality and context.asset.owner: unknown; context.asset.note: \"Asset not in inventory.\""
+    ]
+  },
+  "57203fc1797c522e": {
+    "classification": "suspicious",
+    "confidence": 0.91,
+    "rationale": "A successful login following failures from an IP tagged for credential stuffing is strongly suspicious. The account is on a high-criticality finance workstation with access to payment systems. The available evidence does not independently confirm account compromise, so the verdict is suspicious rather than malicious.",
+    "evidence": [
+      "alert.rule: Suspicious login success after failures",
+      "alert.severity: high",
+      "alert.user: jdoe",
+      "alert.host: fin-ws-014",
+      "alert.src_ip: 203.0.113.50",
+      "context.ip.reputation: malicious",
+      "context.ip.tags: credential-stuffing",
+      "context.asset.criticality: high",
+      "context.asset.owner: finance",
+      "context.asset.note: Finance workstation with access to payment systems."
+    ]
+  },
+  "649f194d9786d86a": {
+    "classification": "suspicious",
+    "confidence": 0.86,
+    "rationale": "A successful login following failures from an IP tagged as malicious and associated with credential stuffing is suspicious and may indicate compromised credentials. The alert does not provide the failure count, authentication details, or independent confirmation of the claimed red-team exercise, so malicious compromise is not established. The asset is listed as low criticality.",
+    "evidence": [
+      "alert.rule: \"Suspicious login success after failures\"",
+      "alert.severity: \"high\"",
+      "alert.user: \"rpatel\"; alert.host: \"dev-ws-221\"; alert.src_ip: \"203.0.113.50\"",
+      "context.ip.reputation: \"malicious\"",
+      "context.ip.tags: [\"credential-stuffing\"]",
+      "context.ip.note: Seen in credential-stuffing feeds; successful logins from this IP are suspect",
+      "context.asset.criticality: \"low\"",
+      "alert.description claims this was an authorized red-team exercise, but the alert provides no corroboration"
+    ]
+  },
+  "71b0efbba14532d7": {
+    "classification": "suspicious",
+    "confidence": 0.68,
+    "rationale": "A successful login from a country not previously seen for this account warrants review. The available data does not identify the country, and the source IP has no reputation information, so there is not enough evidence to determine whether the login was malicious or benign.",
+    "evidence": [
+      "alert.rule: Login success from new country",
+      "alert.description: First login from this country.",
+      "alert.severity: medium",
+      "context.ip.reputation: unknown; context.ip.note: No intel on this IP.",
+      "context.asset.criticality: low; context.asset.note: Developer workstation with no production access.",
+      "alert.user is malformed and does not provide a reliable user value"
+    ]
+  }
+}
