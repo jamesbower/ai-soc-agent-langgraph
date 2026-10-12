@@ -46,6 +46,7 @@ wheels/
 CLAUDE.*
 .claude/settings.local.json
 docs/superpowers/
+tasks/
 .clinerules-*
 .projectBrief.md
 .roomodes
