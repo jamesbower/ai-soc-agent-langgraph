@@ -1,0 +1,13 @@
+.env
+.venv/
+.git/
+.claude/
+CLAUDE.*
+notes/
+tasks/
+**/__pycache__/
+.DS_Store
+.env.*
+!.env.example
+.pytest_cache/
+.worktrees/
