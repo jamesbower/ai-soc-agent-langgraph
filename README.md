@@ -45,9 +45,11 @@ docker run --rm --env-file .env -e SOC_AGENT_MODE=live ai-soc-agent
 
 Each article section has a tag: `s1-graph`, `s2-context`, `s3-policy`, `s4-verification`, `s5-loop`. Run `git checkout s2-context` to see the code at the end of that section.
 
+The run scripts and sample data arrive at `s4-verification`, so at `s1-graph` to `s3-policy` only `pytest` runs. The Dockerfile, the cost script and the diagrams are only on the latest commit.
+
 ## Diagrams
 
-`docs/graph.mmd` and `docs/graph.png` are exported from the compiled graph (`python -m scripts.export_graph`). `docs/state-schema.mmd` shows the state, and `docs/tier1-workflow.mmd` maps a Tier 1 analyst's steps to the graph's nodes.
+`docs/graph.mmd` and `docs/graph.png` are exported from the compiled graph (`python -m scripts.export_graph`; the PNG step calls the mermaid.ink web service, and offline it removes the old PNG). `docs/state-schema.mmd` shows the state, and `docs/tier1-workflow.mmd` maps a Tier 1 analyst's steps to the graph's nodes.
 
 ## Tests
 
