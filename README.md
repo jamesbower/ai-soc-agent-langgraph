@@ -1,4 +1,4 @@
-# ai-soc-agent-langgraph
+# Graph-Based AI SOC Agent with LangGraph 
 
 Companion code for **How to Build an AI SOC Agent with LangGraph** (Part 1): a Tier 1 triage agent that closes alerts only when it's confident and safe to, and escalates everything else to Tier 2.
 
