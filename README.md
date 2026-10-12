@@ -1,6 +1,10 @@
 # Graph-Based AI SOC Agent with LangGraph 
 
-Companion code for **How to Build an AI SOC Agent with LangGraph** (Part 1): a Tier 1 triage agent that closes alerts only when it's confident and safe to, and escalates everything else to Tier 2.
+Companion code for **[How To Build Graph-Based AI SOC Agents The Best Way](https://www.jamesbower.com/ai-soc-agent-langgraph/)** (Part 1): a Tier 1 triage agent that closes alerts only when it's confident and safe to, and escalates everything else to Tier 2.
+
+Read the article first. It explains why the code is built this way, section by section, and each section has a matching [checkpoint tag](#checkpoints).
+
+**This is Part 1 of 3.** Part 2 adds a Tier 2 investigation agent (hypotheses, log queries, alert correlation, human approval). Part 3 adds multiple agents, persistent memory and threat hunting. I'm planning a free course built on this repo, and the waitlist decides whether I build it. If you want it, [join the waitlist](https://james-bower.kit.com/ai-soc-agent-course?utm_source=github&utm_medium=readme&utm_campaign=ai-soc-agent-part1).
 
 Requires Python 3.10 or later. Run every command from the repo root: data paths are relative. Commands use macOS/Linux shell syntax; on Windows, use WSL.
 
