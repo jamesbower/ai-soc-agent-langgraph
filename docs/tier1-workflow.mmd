@@ -1,0 +1,16 @@
+flowchart LR
+    subgraph Human["Tier 1 analyst"]
+        H1["Ingest and validate"] --> H2["Classify"] --> H3["Enrich"] --> H4["Check history"] --> H5["Assess"] --> H6["Decide"] --> H7["Document"]
+    end
+    subgraph Agent["LangGraph agent"]
+        N1["ingest<br>(normalize fields, fill defaults)"] --> N2["classify<br>(auth or other)"] --> N3["enrich<br>(mock intel and asset lookup)"] --> N4["check_known_fp<br>(known-FP rule, IP not known-bad)"]
+        N4 -- "not a known FP" --> N5["assess (LLM)"] --> N6["decide<br>(policy and hard rules)"] --> N7["record<br>(case note)"]
+        N4 -- "known FP: skips the LLM" --> N6
+    end
+    H1 -.-> N1
+    H2 -.-> N2
+    H3 -.-> N3
+    H4 -.-> N4
+    H5 -.-> N5
+    H6 -.-> N6
+    H7 -.-> N7

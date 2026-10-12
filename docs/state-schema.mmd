@@ -1,0 +1,21 @@
+classDiagram
+    class TriageState {
+        dict alert
+        dict normalized
+        str alert_type
+        dict enrichment
+        bool known_fp
+        dict verdict
+        str decision
+        str case_note
+        list audit
+    }
+    class Verdict {
+        str classification
+        float confidence
+        str rationale
+        list~str~ evidence
+    }
+    TriageState --> Verdict : verdict holds Verdict.model_dump
+    note for TriageState "audit uses an operator.add reducer, so each node appends to it"
+    note for Verdict "classification is benign, suspicious or malicious (prompted, not enforced)<br>confidence is between 0 and 1 (enforced by Field ge=0, le=1)"
